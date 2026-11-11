@@ -1,0 +1,8 @@
+node_modules
+dist
+*.tgz
+.next
+next-env.d.ts
+apps/fixture/AGENTS.md
+apps/fixture/build.log
+*.tsbuildinfo

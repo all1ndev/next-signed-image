@@ -1,0 +1,90 @@
+{
+	"name": "@all1ndev/next-signed-image",
+	"version": "0.1.0",
+	"description": "A drop-in next/image replacement for image services that need server-side signed URLs (Thumbor, imgproxy, signed imgix/Cloudinary/S3), with no hydration mismatch.",
+	"keywords": [
+		"next",
+		"nextjs",
+		"next/image",
+		"image",
+		"signed-url",
+		"thumbor",
+		"imgproxy",
+		"react-server-components"
+	],
+	"license": "MIT",
+	"author": "Andrei L (https://all1n.dev)",
+	"homepage": "https://github.com/all1ndev/next-signed-image/tree/main/packages/next-signed-image#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/all1ndev/next-signed-image.git",
+		"directory": "packages/next-signed-image"
+	},
+	"bugs": "https://github.com/all1ndev/next-signed-image/issues",
+	"type": "module",
+	"sideEffects": [
+		"./dist/signer.default.js"
+	],
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/image.client.d.ts",
+			"react-server": "./dist/image.server.js",
+			"default": "./dist/image.client.js"
+		},
+		"./delivery": {
+			"types": "./dist/delivery.d.ts",
+			"default": "./dist/delivery.js"
+		},
+		"./route": {
+			"types": "./dist/route.d.ts",
+			"default": "./dist/route.js"
+		},
+		"./config": {
+			"types": "./dist/config.d.ts",
+			"default": "./dist/config.js"
+		},
+		"./signer": {
+			"types": "./dist/signer.default.d.ts",
+			"browser": "./dist/signer.browser.js",
+			"default": "./dist/signer.default.js"
+		},
+		"./signer/browser": {
+			"types": "./dist/signer.browser.d.ts",
+			"default": "./dist/signer.browser.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"scripts": {
+		"build": "rm -rf dist && tsc -p tsconfig.build.json",
+		"test": "vitest run",
+		"typecheck": "tsc --noEmit",
+		"prepack": "pnpm run build"
+	},
+	"peerDependencies": {
+		"@types/react": ">=19",
+		"next": ">=16",
+		"react": ">=19",
+		"react-dom": ">=19"
+	},
+	"peerDependenciesMeta": {
+		"@types/react": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@types/node": "catalog:",
+		"@types/react": "catalog:",
+		"@types/react-dom": "catalog:",
+		"next": "catalog:",
+		"react": "catalog:",
+		"react-dom": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"engines": {
+		"node": ">=20.9.0"
+	}
+}

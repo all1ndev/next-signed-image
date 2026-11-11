@@ -1,0 +1,28 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig.json",
+	"compilerOptions": {
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"exactOptionalPropertyTypes": true,
+		"noImplicitReturns": true,
+		"noImplicitOverride": true,
+		"noFallthroughCasesInSwitch": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"noUncheckedSideEffectImports": true,
+		"moduleDetection": "force",
+		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
+		"erasableSyntaxOnly": true,
+		"forceConsistentCasingInFileNames": true,
+		// Requires declaration emit to be on.
+		"isolatedDeclarations": true,
+		"declaration": true,
+		// Next 16's own .d.ts files use PromiseWithResolvers, from lib ES2024; our lib stays at
+		// ES2022 so browser code cannot use APIs above the Safari 16.4 floor.
+		"skipLibCheck": true
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"name": "next-signed-image-monorepo",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "pnpm --filter @all1ndev/next-signed-image build",
+		"test": "pnpm --filter @all1ndev/next-signed-image test",
+		"typecheck": "pnpm build && pnpm -r typecheck",
+		"fixture:build": "pnpm build && pnpm --filter signed-image-fixture build",
+		"fixture:dev": "pnpm build && pnpm --filter signed-image-fixture dev",
+		"check:pack": "bash scripts/check-pack.sh",
+		"check:fixture": "pnpm build && bash scripts/check-fixture.sh"
+	},
+	"packageManager": "pnpm@12.18.0",
+	"engines": {
+		"node": ">=24"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "12.18.0",
+			"onFail": "error"
+		}
+	}
+}

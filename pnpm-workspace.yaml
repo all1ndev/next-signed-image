@@ -1,0 +1,49 @@
+packages:
+  - packages/*
+  - apps/*
+
+# One version of each shared dependency; `catalogMode: strict` makes `pnpm add` use it.
+catalog:
+  "@types/node": 24.19.0
+  "@types/react": 19.3.0
+  "@types/react-dom": 19.3.0
+  next: 16.4.2
+  react: 19.3.0
+  react-dom: 19.3.0
+  typescript: 7.1.0-beta
+  vitest: 4.1.12
+catalogMode: strict
+
+# Dependencies
+enableGlobalVirtualStore: true
+autoInstallPeers: false
+strictPeerDependencies: true
+saveExact: true
+engineStrict: true
+verifyDepsBeforeRun: error
+disallowWorkspaceCycles: true
+
+# Only declared dependencies are reachable: nothing hoisted, privately or publicly.
+hoist: false
+publicHoistPattern: []
+
+# Supply chain
+minimumReleaseAge: 10080 # minutes: a version must be a week old
+trustPolicy: no-downgrade
+blockExoticSubdeps: true
+strictDepBuilds: true
+onlyBuiltDependencies: []
+
+# next's .d.ts files import React's and React DOM's types, but next declares neither
+# @types/react nor @types/react-dom; without hoisting they cannot find them, and ImageProps
+# degrades to an index signature.
+packageExtensions:
+  next:
+    peerDependencies:
+      "@types/react": "*"
+      "@types/react-dom": "*"
+    peerDependenciesMeta:
+      "@types/react":
+        optional: true
+      "@types/react-dom":
+        optional: true
