@@ -1,7 +1,7 @@
 import { createHmac } from "node:crypto";
 
-import type { ImageSigner } from "../src/delivery.js";
-import { defineImageSigner } from "../src/route.js";
+import type { ImageSigner } from "../src/delivery.ts";
+import { defineImageSigner } from "../src/route.ts";
 
 // A stand-in resizer: allowed sources are signed, CDN files are served as-is.
 export const imageSigner: ImageSigner = defineImageSigner({

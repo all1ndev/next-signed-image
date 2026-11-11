@@ -1,4 +1,4 @@
-import type { ImageSigner } from "./delivery.js";
+import type { ImageSigner } from "./delivery.ts";
 
 // What `@all1ndev/next-signed-image/signer` resolves to on the server when the app's next.config
 // does not alias it to the app's signer module: evaluating it throws.

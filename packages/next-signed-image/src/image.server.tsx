@@ -1,11 +1,11 @@
 import { imageSigner } from "@all1ndev/next-signed-image/signer";
-import { getImageProps } from "next/image";
+import { getImageProps } from "next/image.js";
 import type { JSX } from "react";
 import { preload } from "react-dom";
 
-import { type ImageProps, nextImageDelivery, ROUTE, serverDelivery } from "./delivery.js";
+import { type ImageProps, nextImageDelivery, ROUTE, serverDelivery } from "./delivery.ts";
 
-export type { ImageProps } from "./delivery.js";
+export type { ImageProps } from "./delivery.ts";
 
 // The `react-server` branch: renders once, on the server, so it needs none of the client
 // branch's hydration bookkeeping.

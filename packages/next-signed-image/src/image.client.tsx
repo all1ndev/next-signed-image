@@ -1,5 +1,5 @@
 import { imageSigner } from "@all1ndev/next-signed-image/signer";
-import NextImage, { getImageProps } from "next/image";
+import nextImage, { getImageProps } from "next/image.js";
 import { type JSX, useId, useState } from "react";
 
 import {
@@ -12,9 +12,13 @@ import {
 	serverDelivery,
 	signedWidthsFromSrcSet,
 	srcUrl,
-} from "./delivery.js";
+} from "./delivery.ts";
 
-export type { ImageProps } from "./delivery.js";
+// next/image is CommonJS: a bundler's default import is the component, while Node's is
+// `module.exports`, whose `default` is the component.
+const NextImage = "default" in nextImage ? nextImage.default : nextImage;
+
+export type { ImageProps } from "./delivery.ts";
 
 /**
  * The `default` branch, for client components. Rendered on the server (SSR) it signs;

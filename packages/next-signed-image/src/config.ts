@@ -3,9 +3,9 @@ import { fileURLToPath } from "node:url";
 
 import type { NextConfig } from "next";
 
-import { defaultImageSizes, type ImageSizes } from "./sizes.js";
+import { defaultImageSizes, type ImageSizes } from "./sizes.ts";
 
-export { defaultImageSizes, type ImageSizes } from "./sizes.js";
+export { defaultImageSizes, type ImageSizes } from "./sizes.ts";
 
 const SIGNER = "@all1ndev/next-signed-image/signer";
 const BROWSER_SIGNER = "@all1ndev/next-signed-image/signer/browser";

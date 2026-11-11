@@ -197,8 +197,17 @@ loudly instead of reaching `/_next/image`.
 - **Env in prerendered shells.** Any server render of a signed source calls your signer, so
   if it reads env, the usual rules apply (`await connection()` inside a prerendered shell).
 - **`basePath`.** The route path is fixed at `/api/image`, without a `basePath` prefix.
-- **Test runners** must alias `@all1ndev/next-signed-image/signer` to a signer module, as
-  `withSignedImages` does for Next (see `vitest.config.ts` in this repository).
+- **Test runners.** `/route`, `/delivery` and `/config` load under plain Node ESM, so a route
+  test needs no setup. A test that renders `Image` must alias `@all1ndev/next-signed-image/signer`
+  to a signer module, as `withSignedImages` does for Next, and must inline the package, because
+  a test runner applies aliases only to code it transforms. With Vitest:
+
+  ```ts
+  export default defineConfig({
+  	resolve: { alias: { "@all1ndev/next-signed-image/signer": "./src/image-signer.ts" } },
+  	test: { server: { deps: { inline: ["@all1ndev/next-signed-image"] } } },
+  });
+  ```
 - **Browser support.** Client code stays within the Safari 16.4 API floor (no `URL.parse`,
   `Object.groupBy` or `Promise.withResolvers`).
 

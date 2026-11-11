@@ -32,4 +32,5 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm check:pack
+      - run: pnpm check:esm
       - run: pnpm check:fixture

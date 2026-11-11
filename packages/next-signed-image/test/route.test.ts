@@ -1,7 +1,7 @@
 import { expect, test, vi } from "vitest";
 
-import { createImageRoute, defineImageSigner } from "../src/route.js";
-import { imageSigner } from "./signer.js";
+import { createImageRoute, defineImageSigner } from "../src/route.ts";
+import { imageSigner } from "./signer.ts";
 
 const GET = createImageRoute(imageSigner);
 

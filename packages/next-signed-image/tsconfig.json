@@ -3,8 +3,9 @@
 	"compilerOptions": {
 		"target": "ES2022",
 		"lib": ["ES2022", "DOM", "DOM.Iterable"],
-		"module": "ESNext",
-		"moduleResolution": "Bundler",
+		"module": "node20",
+		"moduleResolution": "node16",
+		"rewriteRelativeImportExtensions": true,
 		"jsx": "react-jsx",
 		"types": ["node"],
 		"noEmit": true,

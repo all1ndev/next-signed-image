@@ -15,6 +15,7 @@ pnpm install
 pnpm typecheck       # builds the package, then typechecks it and the fixture
 pnpm test            # unit tests
 pnpm check:pack      # packs like `pnpm publish` and checks what ships
+pnpm check:esm       # imports every entry point of dist under plain Node ESM
 pnpm check:fixture   # builds the fixture with Turbopack and webpack; no signer in the browser
 pnpm fixture:dev -p 3999
 node apps/fixture/hydration-probe.cjs <dir with @playwright/test> http://localhost:3999/

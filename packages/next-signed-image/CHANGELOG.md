@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2026-11-12)
+
+- Fixed: the built files imported `next/image` without an extension, which Node's ESM loader
+  cannot resolve (next has no `exports` map), so a test runner loading the package natively
+  failed with "Cannot find module …/next/image". `/route` no longer loads `next` at all.
+- README: how to set up Vitest for tests that render `Image`.
+- The package now compiles with `module: node20` and Node's module resolution, so an import
+  that plain Node cannot resolve fails the typecheck.
+
 ## 0.1.0 (2026-11-12)
 
 - `Image`: a `next/image` replacement that signs image URLs on the server. Server components

@@ -9,7 +9,8 @@
 		"fixture:build": "pnpm build && pnpm --filter signed-image-fixture build",
 		"fixture:dev": "pnpm build && pnpm --filter signed-image-fixture dev",
 		"check:pack": "bash scripts/check-pack.sh",
-		"check:fixture": "pnpm build && bash scripts/check-fixture.sh"
+		"check:fixture": "pnpm build && bash scripts/check-fixture.sh",
+		"check:esm": "pnpm build && node apps/fixture/check-esm.mjs"
 	},
 	"packageManager": "pnpm@12.18.0",
 	"engines": {

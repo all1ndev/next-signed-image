@@ -1,13 +1,15 @@
+// With the extension: next has no `exports` map, so Node ESM (a test runner loading dist
+// natively) cannot resolve a bare "next/image".
 import {
 	getImageProps,
 	type ImageLoader,
 	type ImageLoaderProps,
 	type ImageProps as NextImageProps,
-} from "next/image";
+} from "next/image.js";
 
-import { DEFAULT_QUALITY } from "./sizes.js";
+import { DEFAULT_QUALITY } from "./sizes.ts";
 
-export { DEFAULT_QUALITY, defaultImageSizes, type ImageSizes } from "./sizes.js";
+export { DEFAULT_QUALITY, defaultImageSizes, type ImageSizes } from "./sizes.ts";
 
 /**
  * The app's signing policy and key, provider-agnostic. Lives in the app's own module (the one

@@ -1,12 +1,12 @@
-import { getImageProps } from "next/image";
+import { getImageProps } from "next/image.js";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, test } from "vitest";
 
-import { type ImageProps, nextImageDelivery, serverDelivery, signedWidthsFromSrcSet } from "../src/delivery.js";
-import { Image } from "../src/image.client.js";
-import { Image as ServerImage } from "../src/image.server.js";
-import { imageSigner } from "./signer.js";
+import { type ImageProps, nextImageDelivery, serverDelivery, signedWidthsFromSrcSet } from "../src/delivery.ts";
+import { Image } from "../src/image.client.tsx";
+import { Image as ServerImage } from "../src/image.server.tsx";
+import { imageSigner } from "./signer.ts";
 
 const FIXED = { alt: "", width: 256, height: 192 } as const;
 const FILL = { alt: "", fill: true, sizes: "(min-width: 1024px) 272px, 90vw" } as const;

@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 
-import { withSignedImages } from "../src/config.js";
+import { withSignedImages } from "../src/config.ts";
 
 test("aliases the signer for Turbopack and webpack and forces a custom loader", () => {
 	const config = withSignedImages(
@@ -27,5 +27,5 @@ test("aliases the signer for Turbopack and webpack and forces a custom loader", 
 });
 
 test("refuses to run unconfigured", async () => {
-	await expect(import("../src/signer.default.js")).rejects.toThrow(/withSignedImages/);
+	await expect(import("../src/signer.default.ts")).rejects.toThrow(/withSignedImages/);
 });

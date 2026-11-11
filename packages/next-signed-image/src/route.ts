@@ -1,6 +1,8 @@
-import { type ImageSigner, type ImageSizes, defaultImageSizes } from "./delivery.js";
+import type { ImageSigner } from "./delivery.ts";
+// Not through delivery.js, which imports next/image: the route loads under plain Node ESM.
+import { defaultImageSizes, type ImageSizes } from "./sizes.ts";
 
-export type { ImageSigner, ImageSizes } from "./delivery.js";
+export type { ImageSigner, ImageSizes } from "./delivery.ts";
 
 /**
  * Marks the app's signer. Stands in for `server-only`, which the SSR pass of a client
