@@ -20,8 +20,8 @@ pnpm fixture:dev -p 3999
 node apps/fixture/hydration-probe.cjs <dir with @playwright/test> http://localhost:3999/
 ```
 
-CI (`.github/workflows/ci.yml`) runs everything above except the hydration probe, on Node 24
-and 26.
+CI (`.github/workflows/ci.yml`) runs everything above except the hydration probe, on Node 22,
+24 and 26.
 
 The fixture resolves the package through its `exports`, so it runs the built `dist`, not the
 source. `check:fixture` also builds it with `FIXTURE_CONTROL=unaliased` (must fail with the
