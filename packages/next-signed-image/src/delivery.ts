@@ -18,10 +18,10 @@ export { DEFAULT_QUALITY, defaultImageSizes, IMAGE_ROUTE, type ImageSizes } from
 export type ImageSigner = {
 	/**
 	 * How a remote `src` is served: `"as-is"` by its own URL (a file that gains nothing from a
-	 * resize), `"sign"` through signed URLs, `"route"` refused (the route answers 403).
+	 * resize), `"sign"` through signed URLs, `"refuse"` not at all (the route answers 403).
 	 * Same-origin paths and SVGs never reach it: they are always served as-is.
 	 */
-	delivery(src: string): "as-is" | "sign" | "route";
+	delivery(src: string): "as-is" | "sign" | "refuse";
 	/** A signed URL for `src` resized to `width`. Only called after `delivery` returned "sign". */
 	sign(image: { src: string; width: number; quality: number }): string;
 };

@@ -9,7 +9,7 @@ export const imageSigner: ImageSigner = defineImageSigner({
 	delivery(src) {
 		const origin = URL.parse(src)?.origin;
 		if (origin === "https://files.example.com") return "as-is";
-		return origin === "https://img.example.com" ? "sign" : "route";
+		return origin === "https://img.example.com" ? "sign" : "refuse";
 	},
 	sign({ src, width, quality }) {
 		const key = process.env["FAKE_SIGNING_SECRET_ZX81"];

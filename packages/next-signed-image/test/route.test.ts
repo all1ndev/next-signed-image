@@ -1,6 +1,6 @@
 import { expect, test, vi } from "vitest";
 
-import { imageRouteUrl } from "../src/delivery.ts";
+import { type ImageSigner, imageRouteUrl, serverDelivery } from "../src/delivery.ts";
 import { createImageRoute, defineImageSigner } from "../src/route.ts";
 import { imageSigner } from "./signer.ts";
 
@@ -70,4 +70,12 @@ test("the loader's route URL follows the path withSignedImages inlines", () => {
 	} finally {
 		vi.unstubAllEnvs();
 	}
+});
+
+test('still refuses a pre-0.2 signer that answers "route"', () => {
+	const legacy = { ...imageSigner, delivery: () => "route" } as unknown as ImageSigner;
+	const src = "https://img.example.com/a.jpg";
+	const query = new URLSearchParams({ src, w: "640", q: "75" });
+	expect(createImageRoute(legacy)(new Request(`http://localhost/api/image?${query}`)).status).toBe(403);
+	expect(serverDelivery({ src, alt: "", width: 640, height: 480 }, legacy)?.kind).toBe("route");
 });
