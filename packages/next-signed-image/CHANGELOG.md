@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.3 (2026-11-12)
 
 - Fixed: under a `basePath`, images that go through the signing route requested `/api/image`
   instead of `<basePath>/api/image` and got a 404. `withSignedImages` now inlines the route's
