@@ -94,7 +94,8 @@ export default withSignedImages(
 );
 ```
 
-**3. Add the signing route** for images that first render in the browser:
+**3. Add the signing route** for images that first render in the browser. It lives at
+`/api/image`; under a `basePath`, the loader adds the prefix for you:
 
 ```ts
 // src/app/api/image/route.ts
@@ -225,7 +226,6 @@ instead of reaching `/_next/image`.
   the browser cannot sign.
 - **Env in prerendered shells.** Any server render of a signed source calls your signer, so if it
   reads env, the usual rules apply (`await connection()` inside a prerendered shell).
-- **`basePath`.** The route path is fixed at `/api/image`, without a `basePath` prefix.
 - **Test runners.** `/route`, `/delivery` and `/config` load under plain Node ESM, so a route test
   needs no setup. A test that renders `Image` must alias `@all1ndev/next-signed-image/signer` to a
   signer module, as `withSignedImages` does for Next, and must inline the package, because a test

@@ -31,6 +31,14 @@ for bundler in --turbopack --webpack; do
 	echo "$bundler: OK"
 done
 
+# Under a basePath, the signing route's URLs must carry it, on the server and in the browser.
+for bundler in --turbopack --webpack; do
+	FIXTURE_BASE_PATH=/shop build "$bundler" || { cat build.log >&2; exit 1; }
+	grep -q 'src="/shop/api/image?' .next/server/app/index.html || { echo "$bundler basePath: route image misses /shop" >&2; exit 1; }
+	grep -rlq '/shop/api/image' .next/static || { echo "$bundler basePath: browser loader misses /shop" >&2; exit 1; }
+	echo "$bundler basePath: OK"
+done
+
 # Without withSignedImages, the build must fail with the setup error.
 if FIXTURE_CONTROL=unaliased build; then
 	echo "control unaliased: the build should have failed" >&2

@@ -1,5 +1,6 @@
 import { expect, test, vi } from "vitest";
 
+import { imageRouteUrl } from "../src/delivery.ts";
 import { createImageRoute, defineImageSigner } from "../src/route.ts";
 import { imageSigner } from "./signer.ts";
 
@@ -57,5 +58,16 @@ test("defineImageSigner refuses to run in a browser", () => {
 		expect(() => defineImageSigner(imageSigner)).toThrow(/bundled for the browser/);
 	} finally {
 		vi.unstubAllGlobals();
+	}
+});
+
+test("the loader's route URL follows the path withSignedImages inlines", () => {
+	const src = "https://evil.com/a.jpg";
+	expect(imageRouteUrl({ src, width: 640, quality: 75 })).toMatch(/^\/api\/image\?/);
+	vi.stubEnv("SIGNED_IMAGE_ROUTE", "/shop/api/image");
+	try {
+		expect(imageRouteUrl({ src, width: 640, quality: 75 })).toMatch(/^\/shop\/api\/image\?/);
+	} finally {
+		vi.unstubAllEnvs();
 	}
 });

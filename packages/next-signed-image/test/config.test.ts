@@ -29,3 +29,11 @@ test("aliases the signer for Turbopack and webpack and forces a custom loader", 
 test("refuses to run unconfigured", async () => {
 	await expect(import("../src/signer.default.ts")).rejects.toThrow(/withSignedImages/);
 });
+
+test.each([
+	["without a basePath", {}, "/api/image"],
+	["under a basePath", { basePath: "/shop" }, "/shop/api/image"],
+])("inlines the signing route's path %s", (_, nextConfig, path) => {
+	const config = withSignedImages({ ...nextConfig, env: { KEPT: "1" } }, { signer: "./s.ts" });
+	expect(config.env).toEqual({ KEPT: "1", SIGNED_IMAGE_ROUTE: path });
+});

@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 
 import type { NextConfig } from "next";
 
-import { defaultImageSizes, type ImageSizes } from "./sizes.ts";
+import { defaultImageSizes, IMAGE_ROUTE, type ImageSizes } from "./sizes.ts";
 
 export { defaultImageSizes, type ImageSizes } from "./sizes.ts";
 
@@ -31,6 +31,8 @@ export function withSignedImages(
 	return {
 		...nextConfig,
 		images: { ...images, loader: "custom", ...sizes },
+		// Next adds no basePath to a custom loader's URLs, so the loader gets the full path.
+		env: { ...nextConfig.env, SIGNED_IMAGE_ROUTE: `${nextConfig.basePath ?? ""}${IMAGE_ROUTE}` },
 		turbopack: {
 			...nextConfig.turbopack,
 			resolveAlias: {

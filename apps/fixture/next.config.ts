@@ -21,7 +21,12 @@ function commonAncestor(a: string, b: string): string {
 	return aParts.slice(0, index).join(path.sep) || path.sep;
 }
 
-const base: NextConfig = { turbopack: { root: commonAncestor(workspaceRoot, nextRoot) } };
+// FIXTURE_BASE_PATH serves the app under a prefix, to check the signing route follows it.
+const basePath = process.env["FIXTURE_BASE_PATH"];
+const base: NextConfig = {
+	...(basePath ? { basePath } : {}),
+	turbopack: { root: commonAncestor(workspaceRoot, nextRoot) },
+};
 const config = withSignedImages(base, { signer: "./src/image-signer.ts" });
 
 // Negative controls for the proofs in the README; never set them in an app.

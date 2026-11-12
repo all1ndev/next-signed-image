@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Fixed: under a `basePath`, images that go through the signing route requested `/api/image`
+  instead of `<basePath>/api/image` and got a 404. `withSignedImages` now inlines the route's
+  full path through Next's `env` config.
+
 ## 0.1.2 (2026-11-12)
 
 - README: opens with the problem it solves, what each render path gets, and a quick start.

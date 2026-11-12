@@ -7,9 +7,9 @@ import {
 	type ImageProps as NextImageProps,
 } from "next/image.js";
 
-import { DEFAULT_QUALITY } from "./sizes.ts";
+import { DEFAULT_QUALITY, IMAGE_ROUTE } from "./sizes.ts";
 
-export { DEFAULT_QUALITY, defaultImageSizes, type ImageSizes } from "./sizes.ts";
+export { DEFAULT_QUALITY, defaultImageSizes, IMAGE_ROUTE, type ImageSizes } from "./sizes.ts";
 
 /**
  * The app's signing policy and key, provider-agnostic. Lives in the app's own module (the one
@@ -50,7 +50,6 @@ export type Delivery =
 export const AS_IS: Delivery = { kind: "as-is" };
 export const ROUTE: Delivery = { kind: "route" };
 
-export const IMAGE_ROUTE = "/api/image";
 const SAME_ORIGIN_PROBE = "https://same-origin.invalid";
 
 /**
@@ -146,7 +145,9 @@ export function imageRouteUrl({ src, width, quality }: ImageLoaderProps): string
 		q: String(quality ?? DEFAULT_QUALITY),
 	});
 
-	return `${IMAGE_ROUTE}?${params}`;
+	// withSignedImages inlines the path with the app's basePath at build time (Next's `env`
+	// config). Written as `process.env.X` so the bundler can replace it; unset outside Next.
+	return `${process.env.SIGNED_IMAGE_ROUTE ?? IMAGE_ROUTE}?${params}`;
 }
 
 // Resolve as the browser will, not by prefix: `//host`, `/\host` and a tab or newline

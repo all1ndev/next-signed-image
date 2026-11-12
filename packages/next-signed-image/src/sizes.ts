@@ -14,3 +14,6 @@ export const defaultImageSizes: ImageSizes = {
 	imageSizes: [32, 48, 64, 96, 128, 256, 384],
 	qualities: [DEFAULT_QUALITY],
 };
+
+/** The signing route's path, before the app's `basePath`. */
+export const IMAGE_ROUTE = "/api/image";
