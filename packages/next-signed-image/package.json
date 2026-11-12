@@ -1,6 +1,6 @@
 {
 	"name": "@all1ndev/next-signed-image",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A drop-in next/image replacement for image services that need server-side signed URLs (Thumbor, imgproxy, signed imgix/Cloudinary/S3), with no hydration mismatch.",
 	"keywords": [
 		"next",

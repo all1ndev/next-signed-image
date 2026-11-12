@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 (2026-11-12)
+
+- README: opens with the problem it solves, what each render path gets, and a quick start.
+  No code changes.
+
 ## 0.1.1 (2026-11-12)
 
 - Fixed: the built files imported `next/image` without an extension, which Node's ESM loader
