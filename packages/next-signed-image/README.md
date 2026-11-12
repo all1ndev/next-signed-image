@@ -71,7 +71,7 @@ export const imageSigner = defineImageSigner({
 		const origin = URL.parse(src)?.origin;
 		if (origin === "https://cdn.example.com") return "as-is"; // already display-sized
 		if (origin === "https://photos.example.com") return "sign";
-		return "route"; // refused: /api/image answers 403
+		return "route"; // refused: never signed, /api/image answers 403
 	},
 	sign({ src, width, quality }) {
 		return signWithYourService(src, width, quality, process.env.IMAGE_SIGNING_KEY);
@@ -95,7 +95,8 @@ export default withSignedImages(
 ```
 
 **3. Add the signing route** for images that first render in the browser. It lives at
-`/api/image`; under a `basePath`, the loader adds the prefix for you:
+`/api/image`; under a `basePath`, the loader adds the prefix for you. To mount it elsewhere, pass
+the path (without `basePath`) as `withSignedImages(config, { signer, route: "/img" })`:
 
 ```ts
 // src/app/api/image/route.ts
@@ -119,11 +120,21 @@ type ImageSigner = {
 };
 ```
 
-| `delivery(src)` | Server render                               | `/api/image`                        |
-| --------------- | ------------------------------------------- | ----------------------------------- |
-| `"sign"`        | `sign()` for each width next/image asks for | `302` to `sign()`                   |
-| `"as-is"`       | the URL itself, `unoptimized`               | `302` to the normalized http(s) URL |
-| `"route"`       | points at `/api/image` (one broken image)   | `403`                               |
+`delivery(src)` is your source policy. Its answer decides what the server puts in the HTML, and
+what `/api/image` answers when the browser asks for the image:
+
+| `delivery(src)` | Meaning                                | Server render                               | `/api/image`                        |
+| --------------- | -------------------------------------- | ------------------------------------------- | ----------------------------------- |
+| `"sign"`        | allowed, resize it                     | `sign()` for each width next/image asks for | `302` to `sign()`                   |
+| `"as-is"`       | allowed, already the right size        | the URL itself, `unoptimized`               | `302` to the normalized http(s) URL |
+| `"route"`       | **refused**: not a source you serve    | a `/api/image` URL, nothing signed          | `403`, so the image shows as broken |
+
+**Why refuse with a `403`.** `/api/image` is a public URL: anyone can call it with any `src`. If it
+signed whatever it was given, it would turn your resizer into a free image proxy for the whole
+internet, on your bill, and your domain into an open redirect. So the route signs or redirects
+only what `delivery()` allows, and answers every other source with `403 Forbidden`. A `403` in
+your app means a source is missing from your policy. A malformed request (no `src`, or a width or
+quality outside your [sizes](#sizes-and-qualities)) gets `400 Bad Request` instead.
 
 Same-origin paths (`/public` files, static imports) and `.svg` sources are always served as-is,
 before the signer is asked, because the browser has to reach the same decision without it. The

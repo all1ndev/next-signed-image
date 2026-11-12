@@ -15,6 +15,8 @@ export type SignedImagesOptions = {
 	signer: string;
 	/** Pass the same object to `createImageRoute`: a width the route rejects breaks every image. */
 	sizes?: ImageSizes;
+	/** The signing route's path, before `basePath`, where the app mounts `createImageRoute`. */
+	route?: string;
 };
 
 /**
@@ -23,8 +25,13 @@ export type SignedImagesOptions = {
  */
 export function withSignedImages(
 	nextConfig: NextConfig,
-	{ signer, sizes = defaultImageSizes }: SignedImagesOptions,
+	{ signer, sizes = defaultImageSizes, route = IMAGE_ROUTE }: SignedImagesOptions,
 ): NextConfig {
+	if (!/^\/[^?#]*$/.test(route)) {
+		throw new Error(
+			`@all1ndev/next-signed-image: route must be a path like "/api/image", got "${route}"`,
+		);
+	}
 	const { loaderFile: _loaderFile, ...images } = nextConfig.images ?? {};
 	const browserStub = fileURLToPath(new URL("./signer.browser.js", import.meta.url));
 
@@ -32,7 +39,7 @@ export function withSignedImages(
 		...nextConfig,
 		images: { ...images, loader: "custom", ...sizes },
 		// Next adds no basePath to a custom loader's URLs, so the loader gets the full path.
-		env: { ...nextConfig.env, SIGNED_IMAGE_ROUTE: `${nextConfig.basePath ?? ""}${IMAGE_ROUTE}` },
+		env: { ...nextConfig.env, SIGNED_IMAGE_ROUTE: `${nextConfig.basePath ?? ""}${route}` },
 		turbopack: {
 			...nextConfig.turbopack,
 			resolveAlias: {
