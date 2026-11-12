@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 (2026-11-12)
 
 - Breaking (types only): the signer's `delivery()` answers `"refuse"` instead of `"route"` for a
   source it won't serve, since that is what the answer means. A signer that still returns
