@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added: `withSignedImages(config, { route })` mounts the signing route somewhere other than
+  `/api/image`.
+
 ## 0.1.3 (2026-11-12)
 
 - Fixed: under a `basePath`, images that go through the signing route requested `/api/image`

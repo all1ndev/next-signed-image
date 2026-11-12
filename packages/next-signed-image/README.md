@@ -95,7 +95,8 @@ export default withSignedImages(
 ```
 
 **3. Add the signing route** for images that first render in the browser. It lives at
-`/api/image`; under a `basePath`, the loader adds the prefix for you:
+`/api/image`; under a `basePath`, the loader adds the prefix for you. To mount it elsewhere, pass
+the path (without `basePath`) as `withSignedImages(config, { signer, route: "/img" })`:
 
 ```ts
 // src/app/api/image/route.ts
