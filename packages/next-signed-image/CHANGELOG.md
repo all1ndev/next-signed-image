@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Breaking (types only): the signer's `delivery()` answers `"refuse"` instead of `"route"` for a
+  source it won't serve, since that is what the answer means. A signer that still returns
+  `"route"` behaves as before, so only TypeScript asks you to rename it.
+
 ## 0.1.4 (2026-11-12)
 
 - Added: `withSignedImages(config, { route })` mounts the signing route somewhere other than

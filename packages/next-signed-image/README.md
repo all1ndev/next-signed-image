@@ -71,7 +71,7 @@ export const imageSigner = defineImageSigner({
 		const origin = URL.parse(src)?.origin;
 		if (origin === "https://cdn.example.com") return "as-is"; // already display-sized
 		if (origin === "https://photos.example.com") return "sign";
-		return "route"; // refused: never signed, /api/image answers 403
+		return "refuse"; // never signed: /api/image answers 403
 	},
 	sign({ src, width, quality }) {
 		return signWithYourService(src, width, quality, process.env.IMAGE_SIGNING_KEY);
@@ -115,7 +115,7 @@ except `loader` and `unoptimized`. `src` is a URL or a static import
 
 ```ts
 type ImageSigner = {
-	delivery(src: string): "as-is" | "sign" | "route";
+	delivery(src: string): "as-is" | "sign" | "refuse";
 	sign(image: { src: string; width: number; quality: number }): string;
 };
 ```
@@ -127,7 +127,7 @@ what `/api/image` answers when the browser asks for the image:
 | --------------- | -------------------------------------- | ------------------------------------------- | ----------------------------------- |
 | `"sign"`        | allowed, resize it                     | `sign()` for each width next/image asks for | `302` to `sign()`                   |
 | `"as-is"`       | allowed, already the right size        | the URL itself, `unoptimized`               | `302` to the normalized http(s) URL |
-| `"route"`       | **refused**: not a source you serve    | a `/api/image` URL, nothing signed          | `403`, so the image shows as broken |
+| `"refuse"`      | not a source you serve                 | a `/api/image` URL, nothing signed          | `403`, so the image shows as broken |
 
 **Why refuse with a `403`.** `/api/image` is a public URL: anyone can call it with any `src`. If it
 signed whatever it was given, it would turn your resizer into a free image proxy for the whole
@@ -160,7 +160,7 @@ const thumbor = createThumbor({ url: process.env.THUMBOR_URL!, key: process.env.
 const allowed = new Set(process.env.THUMBOR_ALLOWED_SOURCE_ORIGINS!.split(","));
 
 export const imageSigner = defineImageSigner({
-	delivery: (src) => (allowed.has(URL.parse(src)?.origin ?? "") ? "sign" : "route"),
+	delivery: (src) => (allowed.has(URL.parse(src)?.origin ?? "") ? "sign" : "refuse"),
 	sign({ src, width, quality }) {
 		const source = new URL(src);
 		if (!allowed.has(source.origin)) throw new Error(`Not an allowed image source: ${src}`);
